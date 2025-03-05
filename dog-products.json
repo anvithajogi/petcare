@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Chew Toy",
+    "category": "Dog Toy",
+    "price": "₹830",
+    "image": "https://images.unsplash.com/photo-1671469627397-2bfdab72070d?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Dog Bed",
+    "category": "Comfort",
+    "price": "₹2,490",
+    "image": "https://plus.unsplash.com/premium_photo-1708724049042-b63eb35f16dd?q=80&w=2019&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Dog Collar",
+    "category": "Accessories",
+    "price": "₹1,245",
+    "image": "https://plus.unsplash.com/premium_photo-1692392181661-96c4b34759db?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Dog Shampoo",
+    "category": "Hygiene",
+    "price": "₹996",
+    "image": "https://images.meesho.com/images/products/303484104/2pbhl_1200.jpg"
+  },
+  {
+    "name": "Dog Food",
+    "category": "Food",
+    "price": "₹2,075",
+    "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSmNWo-LHTYQnq6DgVd_TkeVW3IGRjQzZ1yFND7BS5EQaCaPMDPTKs4AXWK4GnuWYbNnnXRsm-eERzid6ItAdni3WXYOcTxSNStA3xIDLci0ByVTy_YVQz05Q"
+  },
+  {
+    "name": "Dog Leash",
+    "category": "Accessories",
+    "price": "₹1,494",
+    "image": "https://images.unsplash.com/photo-1580129518863-f00fcf1d6e68?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Dog Collar",
+    "category": "Accessories",
+    "price": "₹1,245",
+    "image": "https://plus.unsplash.com/premium_photo-1692392181661-96c4b34759db?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Dog Collar",
+    "category": "Accessories",
+    "price": "₹1,245",
+    "image": "https://plus.unsplash.com/premium_photo-1692392181661-96c4b34759db?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Dog Collar",
+    "category": "Accessories",
+    "price": "₹1,245",
+    "image": "https://plus.unsplash.com/premium_photo-1692392181661-96c4b34759db?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  }
+]

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sell Your Pet - PetCare</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navbar (Same as index.html) -->
+    <nav class="navbar">
+      <div class="logo">
+        <img src="./assets/logo.png" alt="">
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#" class="sell-link">Rehome</a></li>
+        <li><a href="#">Contact</a></li>
+        <li id="signupListItem"><a href="signup.html">SignUp</a></li>
+        <li id="requestsListItem" style="display: none;"><a href="requests.html">Requests</a></li>
+    </ul>
+    
+      <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <!-- Sell Form Section -->
+    <section class="sell-section">
+      <div class="sell-container">
+        <div class="sell-header">
+          <h1>Find a Loving Home for Your Pet <i class="fas fa-paw"></i></h1>
+          <p>We'll help you connect with responsible pet lovers</p>
+        </div>
+
+        <form id="sellForm" class="sell-form">
+
+          <!-- Pet Details -->
+          <div class="form-section">
+            <h2><i class="fas fa-paw"></i> Pet Information</h2>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="pet-name">Pet Name <span>*</span></label>
+                <input type="text" id="pet-name" required placeholder="Buddy" />
+              </div>
+          
+              <div class="form-group">
+                <label for="pet-type">Pet Type <span>*</span></label>
+                <select id="pet-type" required>
+                  <option value="">Select</option>
+                  <option value="dog">Dog</option>
+                  <option value="cat">Cat</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+          
+              <div class="form-group">
+                <label for="breed">Breed <span>*</span></label>
+                <input type="text" id="breed" required placeholder="Golden Retriever" />
+              </div>
+          
+              <div class="form-group">
+                <label for="age">Age <span>*</span></label>
+                <div class="age-input">
+                  <input
+                    type="number"
+                    id="age"
+                    required
+                    placeholder="2"
+                    max="25"
+                    min="0"
+                    step="0.1"
+                  />
+                  <span>years</span>
+                </div>
+              </div>
+          
+              <!-- Gender Field -->
+              <div class="form-group">
+                <label for="gender">Gender <span>*</span></label>
+                <select id="gender" required>
+                  <option value="">Select</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+          
+              <!-- Location Field -->
+              <div class="form-group">
+                <label for="location">Location <span>*</span></label>
+                <input
+                  type="text"
+                  id="location"
+                  required
+                  placeholder="City, Country"
+                />
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h2><i class="fas fa-camera"></i> Pet Photos</h2>
+            <div class="photo-upload">
+              <div class="upload-area" id="dropZone">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag & drop photos here or click to upload</p>
+                <input
+                  type="file"
+                  id="petPhotos"
+                  accept="image/*"
+                  multiple
+                  hidden
+                />
+              </div>
+              <div class="preview-grid" id="previewContainer"></div>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-paper-plane"></i> Submit Listing
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-columns">
+          <div class="footer-column">
+            <h3>About Us</h3>
+            <p>
+              PetCare is dedicated to providing the best care and products for
+              your beloved pets. We believe every pet deserves a loving home.
+            </p>
+            <div class="social-icons">
+              <a href="#" class="social-icon"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Shop</a></li>
+              <li><a href="#">Adopt</a></li>
+              <li><a class="sell-link">Rehome</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h3>Contact Info</h3>
+            <ul>
+              <li>
+                <i class="fas fa-map-marker-alt"></i> near St Aloysius College
+                Rd, Kodailbail, Mangaluru, Karnataka 575003
+              </li>
+              <li><i class="fas fa-phone"></i> +91 9876543210</li>
+              <li><i class="fas fa-envelope"></i> petcare@gmail.com</li>
+            </ul>
+          </div>
+
+          <!-- Feedback Form Column -->
+          <div class="footer-column">
+            <h3>Feedback</h3>
+            <form class="feedback-form">
+              <input type="text" placeholder="Your Name" required />
+              <input type="email" placeholder="Your Email" required />
+              <textarea placeholder="Your Message" rows="4" required></textarea>
+              <button type="submit">Send Feedback</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2023 PetCare. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+    const requestsListItem = document.getElementById("requestsListItem");
+    const signupListItem = document.getElementById("signupListItem");
+    const userEmail = localStorage.getItem("email");
+
+    if (userEmail) {
+        requestsListItem.style.display = "block"; // Show Requests link
+        signupListItem.style.display = "none";    // Hide SignUp completely
+    } else {
+        requestsListItem.style.display = "none";  // Hide Requests link
+        signupListItem.style.display = "block";   // Show SignUp
+    }
+});
+ // Get references to elements
+const dropZone = document.getElementById("dropZone");
+const fileInput = document.getElementById("petPhotos");
+const previewContainer = document.getElementById("previewContainer");
+const sellForm = document.querySelector(".sell-form");
+
+// Click on drop zone to open file picker
+dropZone.addEventListener("click", () => fileInput.click());
+
+// Handle file selection
+fileInput.addEventListener("change", (event) => handleFiles(event.target.files));
+
+// Drag-and-drop functionality
+dropZone.addEventListener("dragover", (event) => event.preventDefault());
+dropZone.addEventListener("drop", (event) => {
+  event.preventDefault();
+  handleFiles(event.dataTransfer.files);
+});
+
+// Function to handle image selection
+function handleFiles(files) {
+  previewContainer.innerHTML = ""; // Clear previous previews
+
+  if (files.length > 0) {
+    const file = files[0]; // Only allow one image at a time
+    if (file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // Hide upload box
+        dropZone.style.display = "none";
+
+        // Create preview wrapper
+        const previewWrapper = document.createElement("div");
+        previewWrapper.classList.add("image-preview-wrapper");
+
+        // Create image preview
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.classList.add("preview-image");
+
+        // Create delete/change button
+        const deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "&#10006;"; // X symbol
+        deleteButton.classList.add("delete-btn");
+        deleteButton.addEventListener("click", () => {
+          previewContainer.innerHTML = ""; // Remove image preview
+          dropZone.style.display = "block"; // Show upload box again
+          fileInput.value = ""; // Reset file input
+        });
+
+        // Append elements
+        previewWrapper.appendChild(img);
+        previewWrapper.appendChild(deleteButton);
+        previewContainer.appendChild(previewWrapper);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Only image files are allowed!");
+    }
+  }
+}
+
+// Prevent form submission if no image is uploaded and redirect if successful
+document.getElementById("sellForm").addEventListener("submit", async (event) => {
+  event.preventDefault(); // Prevent form submission
+
+  // Get form values
+  const petName = document.getElementById("pet-name").value;
+  const petType = document.getElementById("pet-type").value;
+  const breed = document.getElementById("breed").value;
+  const age = document.getElementById("age").value;
+  const gender = document.getElementById("gender").value;
+  const location = document.getElementById("location").value;
+  const petPhoto = document.getElementById("petPhotos").files[0]; // Get file
+
+  if (!petPhoto) {
+    alert("Please upload a pet photo before submitting.");
+    return;
+  }
+  let ageInMonths = Math.round(age * 12); // Convert years to months correctly
+  let formattedAge = "";
+
+  if (ageInMonths === 0) {
+    formattedAge = "Less than a month old";
+  } else if (ageInMonths < 12) {
+    formattedAge = `${ageInMonths} ${ageInMonths === 1 ? "month" : "months"} old`;
+  } else {
+    const years = Math.floor(ageInMonths / 12);
+    const months = ageInMonths % 12;
+    if (months === 0) {
+      formattedAge = `${years} ${years === 1 ? "year" : "years"} old`;
+    } else {
+      formattedAge = `${years} ${years === 1 ? "year" : "years"} ${months} ${months === 1 ? "month" : "months"} old`;
+    }
+  }
+
+  // Read file as Base64
+  const reader = new FileReader();
+  reader.readAsDataURL(petPhoto);
+  reader.onload = async function () {
+    const base64Image = reader.result; // This contains the Base64 image
+
+    // Get uploader details from localStorage
+    const fullname = localStorage.getItem("fullName");
+    const email = localStorage.getItem("email");
+
+    // Create data object
+    const petData = {
+      name: petName,
+      breed: breed,
+      age: formattedAge, // Send formatted age instead of raw number
+      gender: gender,
+      location: location,
+      image: base64Image, // Store Base64 image
+      type: petType,
+      uploader_name: fullname,
+      uploader_email: email
+    };
+
+    console.log(JSON.stringify(petData)); // Debugging
+
+    try {
+      const response = await fetch("http://localhost/petcare/pets/add_pets.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(petData), // Send JSON data
+      });
+
+      const result = await response.json();
+      console.log(result);
+      if (result.success) {
+        alert("Pet listed successfully!");
+        window.location.href = "index.html"; // Redirect to home
+      } else {
+        alert(result.error || "Something went wrong.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Failed to submit the form.");
+    }
+  };
+
+  reader.onerror = function (error) {
+    console.log("Error converting image to Base64:", error);
+  };
+});
+    </script>
+  </body>
+</html>

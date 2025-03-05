@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - PetCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+    <style>
+
+:root {
+        --primary-color: #FF6B8B;
+        --secondary-color: #FFA1C9;
+        --accent-color: #FFD1DC;
+        --neutral-white: #FFFFFF;
+        --neutral-dark-gray: #333333;
+    }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+        background: linear-gradient(rgba(255, 107, 139, 0.8), rgba(255, 161, 201, 0.8)),
+                    url('./assets/dog2.jpg') center/cover no-repeat;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .signin-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 450px;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .signin-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;            
+        }
+
+        .logo img {
+            width: 180px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #FFC107;
+            box-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
+        }
+
+        button[type="submit"] {
+            background: var(--secondary-color);
+            color: #fff;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .social-login {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .social-text {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: var(--secondary-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 480px) {
+            .signin-container {
+                padding: 1.5rem;
+                width: 95%;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signin-container">
+        <h2>Welcome Back to PetCare</h2>
+        <form id="signinForm">
+            <div class="input-group">
+                <input type="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <input type="password" placeholder="Password" required>
+            </div>
+            <button type="submit">Sign In</button>
+        </form>
+
+        <p class="signup-link">
+            New to PetCare? <a href="signup.html">Create an account</a>
+        </p>
+    </div>
+
+    <script>
+        document.getElementById("signinForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const email = document.querySelector("input[placeholder='Email Address']").value;
+            const password = document.querySelector("input[placeholder='Password']").value;
+
+            fetch("http://localhost/petcare/users/login.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: email, password: password }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    alert("Login successful! Redirecting...");
+                    localStorage.setItem("userSignedIn", "true");
+                    localStorage.setItem("fullName", data.full_name);
+                    localStorage.setItem("email", data.email);
+                    window.location.href = "index.html";
+                } else {
+                    alert(data.error);
+                }
+            })
+            .catch((error) => console.error("Error:", error));
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PetCare</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">
+        <img src="./assets/logo.png" alt="" />
+      </div>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#" class="sell-link">Rehome</a></li>
+        <li><a href="#">Contact</a></li>
+        <li id="signupListItem"><a href="signup.html">SignUp</a></li>
+        <li id="requestsListItem" style="display: none">
+          <a href="requests.html">Requests</a>
+        </li>
+        <li>
+          <a href="#" id="cartIcon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="slider-container">
+        <div class="slider">
+          <div
+            class="slide active"
+            style="background-image: url('./assets/dog.jpg')"
+          ></div>
+          <div
+            class="slide"
+            style="background-image: url('./assets/dog2.jpg')"
+          ></div>
+          <div
+            class="slide"
+            style="background-image: url('./assets/dog3.jpg')"
+          ></div>
+        </div>
+      </div>
+      <div class="hero-content">
+        <h1>Welcome to PetCare</h1>
+        <p class="tagline">Where every pet finds a loving home!</p>
+        <button class="cta-button"><a href="#adopt"> Meet Our Pets</a></button>
+      </div>
+    </section>
+
+    <!-- Adopt a Pet Section -->
+    <section class="adopt-section" id="adopt">
+      <h2 class="section-heading">Adopt a Pet</h2>
+      <div class="pet-grid" id="petContainer">
+        <!-- All the pets  -->
+      </div>
+      <button class="show-more-button" id="showMoreBtn">Show More ⬇</button>
+    </section>
+
+    <!-- Adoption Modal -->
+
+    <!-- <p id="requestError" style="color: red; display: none;"></p> -->
+    <div class="adoption-modal" id="adoptionModal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-body">
+          <div class="pet-details">
+            <h2 id="modalPetName"></h2>
+            <span id="modalPetId" style="display: none"></span>
+            <div class="pet-info-grid">
+              <img id="modalPetImage" src="" alt="Pet Image" />
+              <div class="pet-info">
+                <p><strong>Breed:</strong> <span id="modalPetBreed"></span></p>
+                <p><strong>Age:</strong> <span id="modalPetAge"></span></p>
+                <p>
+                  <strong>Gender:</strong> <span id="modalPetGender"></span>
+                </p>
+                <p>
+                  <strong>Location:</strong> <span id="modalPetLocation"></span>
+                </p>
+              </div>
+            </div>
+            <div class="uploader-info">
+              <h3>Uploader Information</h3>
+              <p><strong>Name:</strong> <span id="uploaderName"></span></p>
+              <p><strong>Email:</strong> <span id="uploaderEmail"></span></p>
+            </div>
+          </div>
+          <button
+            class="request-adoption-btn"
+            id="requestAdoption"
+            onclick="request()"
+          >
+            Request for Adoption
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Our Dog Products Section -->
+    <section class="products-section">
+      <h2 class="section-heading">Our Dog Products</h2>
+      <div class="product-grid" id="dogProductsContainer">
+        <!-- All the dog products -->
+      </div>
+      <button class="show-more-button" id="showMoreDog">Show More ⬇</button>
+    </section>
+
+    <!-- Our Cat Products Section -->
+    <section class="products-section">
+      <h2 class="section-heading">Our Cat Products</h2>
+      <div class="product-grid" id="catProductsContainer">
+        <!-- All the cat products -->
+      </div>
+      <button class="show-more-button" id="showMoreCat">Show More ⬇</button>
+    </section>
+
+    <!-- Meet Our Pets Section -->
+    <section class="meet-pets-section">
+      <h2 class="section-heading">Meet Our Pets</h2>
+      <div class="collage-grid" id="petCollage">
+        <!-- Pet collage -->
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-columns">
+          <div class="footer-column">
+            <h3>About Us</h3>
+            <p>
+              PetCare is dedicated to providing the best care and products for
+              your beloved pets. We believe every pet deserves a loving home.
+            </p>
+            <div class="social-icons">
+              <a href="#" class="social-icon"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Shop</a></li>
+              <li><a href="#">Adopt</a></li>
+              <li><a class="sell-link">Sell</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h3>Contact Info</h3>
+            <ul>
+              <li>
+                <i class="fas fa-map-marker-alt"></i> near St Aloysius College
+                Rd, Kodailbail, Mangaluru, Karnataka 575003
+              </li>
+              <li><i class="fas fa-phone"></i> +91 9876543210</li>
+              <li><i class="fas fa-envelope"></i> petcare@gmail.com</li>
+            </ul>
+          </div>
+
+          <!-- Feedback Form Column -->
+          <div class="footer-column">
+            <h3>Feedback</h3>
+            <form class="feedback-form">
+              <input type="text" placeholder="Your Name" required />
+              <input type="email" placeholder="Your Email" required />
+              <textarea placeholder="Your Message" rows="4" required></textarea>
+              <button type="submit">Send Feedback</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2023 PetCare. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="cart-modal" id="cartModal">
+      <div class="cart-content">
+          <div class="cart-header">
+              <h3>Your Cart</h3>
+              <span class="close-cart">&times;</span>
+          </div>
+          <div class="cart-items" id="cartItems">
+              <!-- Cart items will be inserted here -->
+          </div>
+          <div class="cart-total">
+              <h4>Total: <span id="cartTotal">0</span></h4>
+          </div>
+          
+          <!-- Address Input -->
+          <div class="cart-address" style="display: none;">
+            <label for="address">Enter Your Address:</label>
+            <textarea id="address" placeholder="Enter your delivery address"></textarea>
+        </div>
+        
+        <!-- Order Button (Hidden if cart is empty) -->
+        <button class="checkout-btn" onclick="placeOrder()" style="display: none;">Place Order</button>
+        
+        <!-- Order Confirmation Message -->
+        <p id="orderMessage" class="order-message"></p>
+      </div>
+  </div>
+  
+
+    <script src="script.js"></script>
+  </body>
+</html>

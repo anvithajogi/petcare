@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adoption Requests - PetCare</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Add the pink theme colors */
+      :root {
+        --primary-color: #ff6b8b;
+        --secondary-color: #ffa1c9;
+        --accent-color: #ffd1dc;
+        --neutral-white: #ffffff;
+        --neutral-light-gray: #fff5f7;
+        --neutral-dark-gray: #333333;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: var(--neutral-light-gray);
+      }
+
+      .logo img {
+        width: 180px;
+      }
+
+      /* Main Content */
+      .container {
+        margin-top: 80px;
+        padding: 2rem 5%;
+      }
+
+      h2 {
+        color: var(--neutral-dark-gray);
+        margin-bottom: 2rem;
+        text-align: center;
+        font-size: 2.2rem;
+      }
+
+      /* Requests Table */
+      .requests-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--neutral-white);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .requests-table thead {
+        background: var(--primary-color);
+        color: var(--neutral-white);
+      }
+
+      .requests-table th,
+      .requests-table td {
+        padding: 1.2rem;
+        text-align: left;
+      }
+
+      .requests-table th {
+        font-weight: 600;
+      }
+
+      .requests-table tbody tr {
+        border-bottom: 1px solid var(--accent-color);
+      }
+
+      .requests-table tbody tr:last-child {
+        border-bottom: none;
+      }
+
+      .requests-table tbody tr:hover {
+        background-color: var(--neutral-light-gray);
+      }
+
+      .pet-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid var(--accent-color);
+      }
+
+      .status {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 500;
+        text-align: center;
+        display: inline-block;
+      }
+
+      .status.pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .status.approved {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .status.rejected {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        .requests-table {
+          display: block;
+          overflow-x: auto;
+        }
+
+        .requests-table th,
+        .requests-table td {
+          min-width: 150px;
+        }
+      }
+
+      .menu-icon {
+        display: none;
+        color: white;
+        cursor: pointer;
+      }
+
+      @media (max-width: 768px) {
+        .menu-icon {
+          display: block;
+        }
+      }
+
+      .requests-table th {
+    text-align: center; /* Centers text inside <th> */
+}
+
+
+      .requests-table td {
+        text-align: center; /* Ensures the entire <td> is centered */
+        vertical-align: middle; /* Aligns content vertically */
+      }
+
+      button {
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .approve-btn {
+        background: var(--secondary-color);
+        color: var(--neutral-white);
+      }
+
+      .approve-btn:hover {
+        background: #45a049;
+      }
+
+      .reject-btn {
+        background: var(--accent-coral);
+        color: var(--neutral-white);
+      }
+
+      .reject-btn:hover {
+        background: #d32f2f;
+      }
+
+      button i {
+        pointer-events: none;
+      }
+
+      .loading-spinner {
+        border: 4px solid var(--accent-color);
+        border-top: 4px solid var(--primary-color);
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .success-message {
+        color: #155724;
+        background: #d4edda;
+        padding: 0.5rem;
+        border-radius: 5px;
+        margin-top: 0.5rem;
+      }
+
+      .error-message {
+        color: #721c24;
+        background: #f8d7da;
+        padding: 0.5rem;
+        border-radius: 5px;
+        margin-top: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">
+        <img src="./assets/logo.png" alt="" />
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="sell.html" class="sell-link">Rehome</a></li>
+        <li><a href="#">Contact</a></li>
+        <li id="signupListItem"><a href="signup.html">SignUp</a></li>
+        <li id="requestsListItem" style="display: none">
+          <a href="requests.html">Requests</a>
+        </li>
+      </ul>
+
+      <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <div class="container">
+      <h2>Your Adoption Requests 🐾</h2>
+      <table class="requests-table">
+        <thead>
+          <tr>
+            <th>Pet Image</th>
+            <th>Pet Name</th>
+            <th>Breed</th>
+            <th>Requester</th>
+            <th>Status</th>
+            <th>Actions</th>
+            <!-- New column -->
+          </tr>
+        </thead>
+        <tbody id="requestsTable">
+          <!-- Requests will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+    <!-- <script src="script.js"></script> -->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const requestsListItem = document.getElementById("requestsListItem");
+        const signupListItem = document.getElementById("signupListItem");
+        const userEmail = localStorage.getItem("email");
+
+        if (userEmail) {
+          requestsListItem.style.display = "block"; // Show Requests link
+          signupListItem.style.display = "none"; // Hide SignUp completely
+        } else {
+          requestsListItem.style.display = "none"; // Hide Requests link
+          signupListItem.style.display = "block"; // Show SignUp
+        }
+      });
+
+      // Fetch and display requests
+      document.addEventListener("DOMContentLoaded", function () {
+        const userEmail = localStorage.getItem("email");
+        if (!userEmail) {
+          alert("Please log in to see your requests.");
+          window.location.href = "index.html";
+          return;
+        }
+
+        fetch(`http://localhost/petcare/adopt/get_requests.php?to=${userEmail}`)
+          .then((response) => response.json())
+          .then((requests) => {
+            const tableBody = document.getElementById("requestsTable");
+
+            if (requests.length === 0) {
+              tableBody.innerHTML = `
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 2rem;">
+                                    No adoption requests found 🐶
+                                </td>
+                            </tr>`;
+              return;
+            }
+
+            fetch("http://localhost/petcare/pets/fetch_pets.php")
+              .then((response) => response.json())
+              .then((pets) => {
+                requests.forEach((request) => {
+                  const pet = pets.find(
+                    (p) => Number(p.id) === Number(request.pet_id)
+                  );
+
+                  if (!pet) {
+                    console.warn(`No pet found for pet_id: ${request.pet_id}`);
+                    return;
+                  }
+
+                  const row = document.createElement("tr");
+                  row.innerHTML = `
+        <td>
+            <img src="${pet.image}" 
+                alt="${pet.name}" 
+                class="pet-image">
+        </td>
+        <td>${pet.name}</td>
+        <td>${pet.breed}</td>
+        <td>${request.from_user}</td>
+        <td>
+            <span class="status ${request.status.toLowerCase()}">
+                ${request.status}
+            </span>
+        </td>
+<td class="actions">
+    ${
+      request.status === "pending"
+        ? `
+                <button class="approve-btn" data-request-id="${request.pet_id}">
+                    <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="reject-btn" data-request-id="${request.pet_id}">
+                    <i class="fas fa-times"></i> Reject
+                </button>
+            `
+        : `
+                <button class="disabled-btn" disabled>
+                    ${
+                      request.status === "approved"
+                        ? "✅ Approved"
+                        : "❌ Rejected"
+                    }
+                </button>
+            `
+    }
+</td>
+
+    `;
+
+                  tableBody.appendChild(row);
+                });
+              })
+              .catch((error) => console.error("Error fetching pets:", error));
+          });
+      });
+
+      document.addEventListener("click", async (e) => {
+        if (
+          e.target.closest(".approve-btn") ||
+          e.target.closest(".reject-btn")
+        ) {
+          const button = e.target.closest("button");
+          const requestId = button.dataset.requestId;
+
+          if (!requestId) {
+            console.error("Request ID is undefined or null");
+            alert("Invalid request ID. Please try again.");
+            return;
+          }
+
+          const newStatus = button.classList.contains("approve-btn")
+            ? "Approved"
+            : "Rejected";
+
+          // Show loading spinner
+          button.innerHTML = `<div class="loading-spinner"></div>`;
+          button.disabled = true;
+
+          try {
+            const response = await fetch(
+              "http://localhost/petcare/adopt/update_request.php",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  request_id: requestId,
+                  new_status: newStatus,
+                  user_email: localStorage.getItem("email"),
+                }),
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const result = await response.json(); // ✅ Ensure it's read only once
+
+            if (result.success) {
+              // Update UI
+              const row = button.closest("tr");
+              row.querySelector(".status").textContent = newStatus;
+              row.querySelector(
+                ".status"
+              ).className = `status ${newStatus.toLowerCase()}`;
+              row.querySelector(".actions").innerHTML = "";
+
+              // Show success message
+              const successMessage = document.createElement("div");
+              successMessage.className = "success-message";
+              successMessage.textContent = `Status updated to ${newStatus}`;
+              row.appendChild(successMessage);
+            } else {
+              alert(result.error || "Failed to update status");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Failed to update status. Please try again.");
+          } finally {
+            // Reset button
+            button.innerHTML = `<i class="fas fa-${
+              newStatus === "Approved" ? "check" : "times"
+            }"></i>`;
+            button.disabled = false;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

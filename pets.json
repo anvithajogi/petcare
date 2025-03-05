@@ -1,0 +1,132 @@
+[
+    {
+        "id": 1,
+        "name": "Buddy",
+        "breed": "Golden Retriever",
+        "age": "2 years",
+        "gender": "Male",
+        "location": "New York, USA",
+        "image": "https://images.unsplash.com/photo-1583512603805-3cc6b41f3edb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "uploader": {
+            "name": "John Doe",
+            "email": "john@example.com"
+        }
+    },
+    {
+        "id": 2,
+        "name": "Luna",
+        "breed": "Siberian Husky",
+        "age": "1.5 years",
+        "gender": "Female",
+        "location": "Los Angeles, USA",
+        "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "uploader": {
+            "name": "Emma Smith",
+            "email": "emma@example.com"
+        }
+    },
+    {
+        "id": 3,
+        "name": "Max",
+        "breed": "German Shepherd",
+        "age": "3 years",
+        "gender": "Male",
+        "location": "Chicago, USA",
+        "image": "https://images.unsplash.com/photo-1587402092301-725e37c70fd8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "uploader": {
+            "name": "Michael Brown",
+            "email": "michael@example.com"
+        }
+    },
+    {
+        "id": 4,
+        "name": "Bella",
+        "breed": "Labrador Retriever",
+        "age": "2.5 years",
+        "gender": "Female",
+        "location": "Houston, USA",
+        "image": "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "uploader": {
+            "name": "Sophia Johnson",
+            "email": "sophia@example.com"
+        }
+    },
+    {
+        "id": 5,
+        "name": "Charlie",
+        "breed": "Bulldog",
+        "age": "4 years",
+        "gender": "Male",
+        "location": "Miami, USA",
+        "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "uploader": {
+            "name": "Daniel Wilson",
+            "email": "daniel@example.com"
+        }
+    },
+    {
+        "id": 6,
+        "name": "Daisy",
+        "breed": "Beagle",
+        "age": "1 year",
+        "gender": "Female",
+        "location": "San Francisco, USA",
+        "image": "https://images.unsplash.com/photo-1554692918-08fa0fdc9db3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "uploader": {
+            "name": "Olivia Martinez",
+            "email": "olivia@example.com"
+        }
+    },
+    {
+        "id": 7,
+        "name": "Milo",
+        "breed": "Persian Cat",
+        "age": "2 years",
+        "gender": "Male",
+        "location": "Seattle, USA",
+        "image": "https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "uploader": {
+            "name": "James Anderson",
+            "email": "james@example.com"
+        }
+    },
+    {
+        "id": 8,
+        "name": "Lily",
+        "breed": "Siamese Cat",
+        "age": "1.5 years",
+        "gender": "Female",
+        "location": "Boston, USA",
+        "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "uploader": {
+            "name": "Ava Taylor",
+            "email": "ava@example.com"
+        }
+    },
+    {
+        "id": 9,
+        "name": "Oscar",
+        "breed": "Maine Coon",
+        "age": "3 years",
+        "gender": "Male",
+        "location": "Denver, USA",
+        "image": "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "uploader": {
+            "name": "William Harris",
+            "email": "william@example.com"
+        }
+    },
+    {
+        "id": 10,
+        "name": "Sophie",
+        "breed": "Ragdoll Cat",
+        "age": "2 years",
+        "gender": "Female",
+        "location": "Austin, USA",
+        "image": "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "uploader": {
+            "name": "Isabella Moore",
+            "email": "isabella@example.com"
+        }
+    }
+]
