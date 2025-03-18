@@ -24,7 +24,6 @@
       <ul class="nav-links">
         <li><a href="#hero">Home</a></li>
         <li><a href="#" class="sell-link">Rehome</a></li>
-        <li><a href="#">Contact</a></li>
         <li id="signupListItem"><a href="signup.html">SignUp</a></li>
         <li id="requestsListItem" style="display: none">
           <a href="requests.html">Requests</a>
@@ -115,7 +114,7 @@
     </div>
 
     <!-- Our Dog Products Section -->
-    <section class="products-section">
+    <section class="products-section" id="shop">
       <h2 class="section-heading">Our Dog Products</h2>
       <div class="product-grid" id="dogProductsContainer">
         <!-- All the dog products -->
@@ -150,28 +149,16 @@
               PetCare is dedicated to providing the best care and products for
               your beloved pets. We believe every pet deserves a loving home.
             </p>
-            <div class="social-icons">
-              <a href="#" class="social-icon"
-                ><i class="fab fa-facebook-f"></i
-              ></a>
-              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-              <a href="#" class="social-icon"
-                ><i class="fab fa-instagram"></i
-              ></a>
-              <a href="#" class="social-icon"
-                ><i class="fab fa-linkedin-in"></i
-              ></a>
-            </div>
+            
           </div>
 
           <div class="footer-column">
             <h3>Quick Links</h3>
             <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Shop</a></li>
-              <li><a href="#">Adopt</a></li>
-              <li><a class="sell-link">Sell</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="#hero">Home</a></li>
+              <li><a href="#shop">Shop</a></li>
+              <li><a href="#adopt">Adopt</a></li>
+              <li><a href="sell.html" class="sell-link">Sell</a></li>
             </ul>
           </div>
 
@@ -179,10 +166,11 @@
             <h3>Contact Info</h3>
             <ul>
               <li>
-                <i class="fas fa-map-marker-alt"></i> near St Aloysius College
-                Rd, Kodailbail, Mangaluru, Karnataka 575003
+                <i class="fas fa-map-marker-alt"></i>Nandadeepa compound,Maryhill,Airport Rd,konchady,
+                mangaluru,
+                <br>Karnataka,575008
               </li>
-              <li><i class="fas fa-phone"></i> +91 9876543210</li>
+              <li><i class="fas fa-phone"></i> +91 9481405130</li>
               <li><i class="fas fa-envelope"></i> petcare@gmail.com</li>
             </ul>
           </div>
@@ -190,17 +178,17 @@
           <!-- Feedback Form Column -->
           <div class="footer-column">
             <h3>Feedback</h3>
-            <form class="feedback-form">
-              <input type="text" placeholder="Your Name" required />
-              <input type="email" placeholder="Your Email" required />
-              <textarea placeholder="Your Message" rows="4" required></textarea>
+            <form class="feedback-form" id="feedbackForm">
+              <input type="text" id="name" placeholder="Your Name" required />
+              <input type="email" id="email" placeholder="Your Email" required />
+              <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
               <button type="submit">Send Feedback</button>
             </form>
           </div>
         </div>
 
         <div class="footer-bottom">
-          <p>&copy; 2023 PetCare. All rights reserved.</p>
+          <p>&copy; 2025 PetCare. All rights reserved.</p>
         </div>
       </div>
     </footer>

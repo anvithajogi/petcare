@@ -124,8 +124,13 @@ function displayProducts(productsData, containerId, showMoreBtnId) {
 
             // Add event listener for "Buy Now" button
             productCard.querySelector(".buy-button").addEventListener("click", function () {
-                const productData = JSON.parse(this.getAttribute("data-product"));
-                addToCart(productData);
+                const isSignedIn = localStorage.getItem("userSignedIn");
+                if(!isSignedIn){
+                    alert("Sign-in to add the product to cart")
+                }else{
+                    const productData = JSON.parse(this.getAttribute("data-product"));
+                    addToCart(productData);
+                }
             });
         });
 
@@ -284,7 +289,7 @@ function request() {
     };
 
     // Send data to backend PHP script
-    fetch("http://localhost/petcare/adopt/update_request.php", {
+    fetch("http://localhost/petcare/adopt/create_request.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -337,16 +342,61 @@ function addToCart(product) {
     saveCart();
 }
 
-function updateCartDisplay() {
+function updateCartDisplay(orderPlaced = false) {
     const cartItems = document.getElementById("cartItems");
     const cartTotal = document.getElementById("cartTotal");
     const cartCount = document.querySelector(".cart-count");
     const cartAddress = document.querySelector(".cart-address");
     const checkoutBtn = document.querySelector(".checkout-btn");
+    const cart_total = document.querySelector(".cart-total");
 
     cartItems.innerHTML = "";
     let total = 0;
     let totalQuantity = 0;
+
+    // Display placed orders
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    if (orders.length > 0) {
+        orders.forEach((order) => {
+            const orderElement = document.createElement("div");
+            orderElement.className = "order-item";
+            orderElement.innerHTML = `
+                <h3>Order #${order.id}</h3>
+                <p><strong>Order Date:</strong> ${order.date}</p>
+                <p><strong>Delivery Date:</strong> ${order.deliveryDate}</p>
+                <p><strong>Status:</strong> ${order.status}</p>
+                <p><strong>Address:</strong> ${order.address}</p>
+                <div class="order-items">
+                    ${order.items.map(item => `
+                        <div class="order-item-detail">
+                            <img src="${item.image}" alt="${item.name}">
+                            <p>${item.name} - ₹${item.price} x ${item.quantity}</p>
+                        </div>
+                    `).join("")}
+                </div>
+                <button class="cancel-order-btn" onclick="cancelOrder(${order.id})">Cancel Order</button>
+            `;
+            cartItems.appendChild(orderElement);
+        });
+    }
+
+    // Display current cart items
+    if (cart.length === 0) {
+        if (!orderPlaced) {
+            cartItems.innerHTML = "<p class='empty-cart-message'>No items available in cart</p>";
+            cartTotal.textContent = "No items available";
+            cart_total.style.display = "none";
+        } else {
+            cartTotal.textContent = ""; // Hide total when order is placed
+        }
+
+        cartAddress.style.display = "none";
+        checkoutBtn.style.display = "none";
+        cartCount.textContent = "0"; // Reset cart count
+        return;
+    }
+
+    cartItems.innerHTML = "<p class='empty-cart-message'>All products on this website can only be delivered via Cash on Delivery (COD)</p>";
 
     cart.forEach((item) => {
         const price = parseFloat(item.price.replace(/[^\d.]/g, ""));
@@ -375,14 +425,9 @@ function updateCartDisplay() {
     cartTotal.textContent = `₹${total.toFixed(2)}`;
     cartCount.textContent = totalQuantity;
 
-    // Show/hide address and order button based on cart content
-    if (cart.length > 0) {
-        cartAddress.style.display = "block";
-        checkoutBtn.style.display = "block";
-    } else {
-        cartAddress.style.display = "none";
-        checkoutBtn.style.display = "none";
-    }
+    // Show address and checkout button if cart is not empty
+    cartAddress.style.display = "block";
+    checkoutBtn.style.display = "block";
 }
 
 
@@ -426,6 +471,7 @@ updateCartDisplay();
 function placeOrder() {
     const address = document.getElementById("address").value.trim();
     const orderMessage = document.getElementById("orderMessage");
+    const cart_total = document.querySelector(".cart-total");
 
     if (cart.length === 0) {
         orderMessage.textContent = "Your cart is empty. Add items before placing an order.";
@@ -444,6 +490,21 @@ function placeOrder() {
     today.setDate(today.getDate() + 10);
     const deliveryDate = today.toDateString();
 
+    // Create order object
+    const order = {
+        id: Date.now(), // Unique order ID
+        date: new Date().toLocaleString(), // Order date
+        deliveryDate: deliveryDate,
+        address: address,
+        items: cart,
+        status: "Pending" // Order status
+    };
+
+    // Save order to local storage
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+    orders.push(order);
+    localStorage.setItem("orders", JSON.stringify(orders));
+
     // Show order confirmation message
     orderMessage.textContent = `Your order has been placed! It will be delivered to "${address}" on ${deliveryDate}.`;
     orderMessage.style.color = "green";
@@ -451,5 +512,20 @@ function placeOrder() {
     // Clear the cart after placing an order
     cart = [];
     saveCart();
-    updateCartDisplay();
+    updateCartDisplay(true);
+    cart_total.style.display = "none";
 }
+
+
+document.getElementById("feedbackForm").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+
+    const subject = encodeURIComponent("User Feedback from " + name);
+    const body = encodeURIComponent(message);
+
+    window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=petcare@gmail.com&su=${subject}&body=${body}`;
+});
