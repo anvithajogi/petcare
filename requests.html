@@ -150,9 +150,8 @@
       }
 
       .requests-table th {
-    text-align: center; /* Centers text inside <th> */
-}
-
+        text-align: center; /* Centers text inside <th> */
+      }
 
       .requests-table td {
         text-align: center; /* Ensures the entire <td> is centered */
@@ -325,19 +324,19 @@
         <td>${pet.name}</td>
         <td>${pet.breed}</td>
         <td>${request.from_user}</td>
-        <td>
-            <span class="status ${request.status.toLowerCase()}">
-                ${request.status}
-            </span>
-        </td>
+<td>
+    <span class="status ${request.status.toLowerCase()}">
+        ${request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+    </span>
+</td> 
 <td class="actions">
     ${
       request.status === "pending"
         ? `
-                <button class="approve-btn" data-request-id="${request.pet_id}">
+                <button class="approve-btn" data-request-id="${request.id}">
                     <i class="fas fa-check"></i> Approve
                 </button>
-                <button class="reject-btn" data-request-id="${request.pet_id}">
+                <button class="reject-btn" data-request-id="${request.id}">
                     <i class="fas fa-times"></i> Reject
                 </button>
             `
@@ -369,16 +368,13 @@
         ) {
           const button = e.target.closest("button");
           const requestId = button.dataset.requestId;
-
-          if (!requestId) {
-            console.error("Request ID is undefined or null");
-            alert("Invalid request ID. Please try again.");
-            return;
-          }
+          const row = button.closest("tr");
+          const statusCell = row.querySelector(".status");
+          const actionsCell = row.querySelector(".actions");
 
           const newStatus = button.classList.contains("approve-btn")
-            ? "Approved"
-            : "Rejected";
+            ? "approved"
+            : "rejected";
 
           // Show loading spinner
           button.innerHTML = `<div class="loading-spinner"></div>`;
@@ -400,26 +396,24 @@
               }
             );
 
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const result = await response.json(); // ✅ Ensure it's read only once
+            const result = await response.json();
 
             if (result.success) {
-              // Update UI
-              const row = button.closest("tr");
-              row.querySelector(".status").textContent = newStatus;
-              row.querySelector(
-                ".status"
-              ).className = `status ${newStatus.toLowerCase()}`;
-              row.querySelector(".actions").innerHTML = "";
+              // Update status cell
+              statusCell.textContent =
+                newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+              statusCell.className = `status ${newStatus}`;
 
-              // Show success message
-              const successMessage = document.createElement("div");
-              successMessage.className = "success-message";
-              successMessage.textContent = `Status updated to ${newStatus}`;
-              row.appendChild(successMessage);
+              // Update actions cell
+              actionsCell.innerHTML = `
+                    <button class="disabled-btn" disabled>
+                        ${
+                          newStatus === "approved"
+                            ? "✅ Approved"
+                            : "❌ Rejected"
+                        }
+                    </button>
+                `;
             } else {
               alert(result.error || "Failed to update status");
             }
@@ -427,11 +421,15 @@
             console.error("Error:", error);
             alert("Failed to update status. Please try again.");
           } finally {
-            // Reset button
-            button.innerHTML = `<i class="fas fa-${
-              newStatus === "Approved" ? "check" : "times"
-            }"></i>`;
-            button.disabled = false;
+            // Reset button only if still present in DOM
+            if (button.parentElement === actionsCell) {
+              button.innerHTML = `<i class="fas fa-${
+                newStatus === "approved" ? "check" : "times"
+              }"></i> ${
+                newStatus.charAt(0).toUpperCase() + newStatus.slice(1)
+              }`;
+              button.disabled = false;
+            }
           }
         }
       });
