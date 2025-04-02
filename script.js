@@ -283,6 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function request() {
   // Get logged-in user details (assuming you store them in localStorage)
   const fromUser = localStorage.getItem("email"); // User's email
+  const phone = localStorage.getItem("phone"); 
   const toUser = document.getElementById("uploaderEmail").textContent; // Pet uploader's email
   const petId = document.getElementById("modalPetId").textContent; // Unique pet ID from the database
 
@@ -302,6 +303,7 @@ function request() {
     from: fromUser,
     to: toUser,
     pet_id: petId,
+    phone:phone
   };
 
   // Send data to backend PHP script

@@ -197,68 +197,64 @@
         <div class="input-group">
           <input type="password" placeholder="Confirm Password" required />
         </div>
+        <div class="input-group">
+          <input type="text" placeholder="Phone Number" required />
+        </div>
         <button type="submit">Sign Up</button>
       </form>
-
+  
       <p class="signin-link">
         Already have an account? <a href="signin.html">Sign In</a>
       </p>
     </div>
-
+  
     <script>
-      document
-        .getElementById("signupForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-
-          const fullName = document.querySelector(
-            "input[placeholder='Full Name']"
-          ).value;
-          const email = document.querySelector(
-            "input[placeholder='Email Address']"
-          ).value;
-          const password = document.querySelector(
-            "input[placeholder='Create Password']"
-          ).value;
-          const confirmPassword = document.querySelector(
-            "input[placeholder='Confirm Password']"
-          ).value;
-
-          if (password !== confirmPassword) {
-            alert("Passwords do not match. Please try again.");
-            return;
-          }
-
-          fetch("http://localhost/petcare/users/registration.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              full_name: fullName,
-              email: email,
-              password: password,
-            }),
+      document.getElementById("signupForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+  
+        const fullName = document.querySelector("input[placeholder='Full Name']").value;
+        const email = document.querySelector("input[placeholder='Email Address']").value;
+        const password = document.querySelector("input[placeholder='Create Password']").value;
+        const confirmPassword = document.querySelector("input[placeholder='Confirm Password']").value;
+        const phoneNumber = document.querySelector("input[placeholder='Phone Number']").value;
+  
+        if (password !== confirmPassword) {
+          alert("Passwords do not match. Please try again.");
+          return;
+        }
+  
+        fetch("http://localhost/petcare/users/registration.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            full_name: fullName,
+            email: email,
+            password: password,
+            phone: phoneNumber, // Include phone in the request body
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
           })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              return response.json();
-            })
-            .then((data) => {
-              if (data.success) {
-                alert("Account created successfully! Redirecting...");
-                localStorage.setItem("userSignedIn", "true");
-                localStorage.setItem("fullName", fullName);
-                localStorage.setItem("email", email);
-                window.location.href = "index.html";
-              } else {
-                alert(data.error);
-              }
-            })
-            .catch((error) => console.error("Error:", error));
-        });
+          .then((data) => {
+            if (data.success) {
+              alert("Account created successfully! Redirecting...");
+              localStorage.setItem("userSignedIn", "true");
+              localStorage.setItem("fullName", fullName);
+              localStorage.setItem("email", email);
+              localStorage.setItem("phone", phoneNumber); // Save phone number in localStorage
+              window.location.href = "index.html";
+            } else {
+              alert(data.error);
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      });
     </script>
-  </body>
+  </body>  
 </html>

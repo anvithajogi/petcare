@@ -237,10 +237,10 @@
           <a href="requests.html">Requests</a>
         </li>
       </ul>
-
+  
       <div class="menu-icon" onclick="toggleMenu()">☰</div>
     </nav>
-
+  
     <div class="container">
       <h2>Your Adoption Requests 🐾</h2>
       <table class="requests-table">
@@ -252,7 +252,7 @@
             <th>Requester</th>
             <th>Status</th>
             <th>Actions</th>
-            <!-- New column -->
+            <th>Phone no</th> <!-- New column for Phone Number -->
           </tr>
         </thead>
         <tbody id="requestsTable">
@@ -260,14 +260,13 @@
         </tbody>
       </table>
     </div>
-    <!-- <script src="script.js"></script> -->
-
+  
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const requestsListItem = document.getElementById("requestsListItem");
         const signupListItem = document.getElementById("signupListItem");
         const userEmail = localStorage.getItem("email");
-
+  
         if (userEmail) {
           requestsListItem.style.display = "block"; // Show Requests link
           signupListItem.style.display = "none"; // Hide SignUp completely
@@ -276,7 +275,7 @@
           signupListItem.style.display = "block"; // Show SignUp
         }
       });
-
+  
       // Fetch and display requests
       document.addEventListener("DOMContentLoaded", function () {
         const userEmail = localStorage.getItem("email");
@@ -285,82 +284,86 @@
           window.location.href = "index.html";
           return;
         }
-
+  
         fetch(`http://localhost/petcare/adopt/get_requests.php?to=${userEmail}`)
           .then((response) => response.json())
           .then((requests) => {
             const tableBody = document.getElementById("requestsTable");
-
+  
             if (requests.length === 0) {
               tableBody.innerHTML = `
-                            <tr>
-                                <td colspan="5" style="text-align: center; padding: 2rem;">
-                                    No adoption requests found 🐶
-                                </td>
-                            </tr>`;
+                <tr>
+                  <td colspan="7" style="text-align: center; padding: 2rem;">
+                    No adoption requests found 🐶
+                  </td>
+                </tr>`;
               return;
             }
-
+  
             fetch("http://localhost/petcare/pets/fetch_pets.php")
               .then((response) => response.json())
               .then((pets) => {
+                console.log(requests)
                 requests.forEach((request) => {
                   const pet = pets.find(
                     (p) => Number(p.id) === Number(request.pet_id)
                   );
-
+  
                   if (!pet) {
                     console.warn(`No pet found for pet_id: ${request.pet_id}`);
                     return;
                   }
-
+  
                   const row = document.createElement("tr");
                   row.innerHTML = `
-        <td>
-            <img src="${pet.image}" 
-                alt="${pet.name}" 
-                class="pet-image">
-        </td>
-        <td>${pet.name}</td>
-        <td>${pet.breed}</td>
-        <td>${request.from_user}</td>
-<td>
-    <span class="status ${request.status.toLowerCase()}">
-        ${request.status.charAt(0).toUpperCase() + request.status.slice(1)}
-    </span>
-</td> 
-<td class="actions">
-    ${
-      request.status === "pending"
-        ? `
-                <button class="approve-btn" data-request-id="${request.id}">
-                    <i class="fas fa-check"></i> Approve
-                </button>
-                <button class="reject-btn" data-request-id="${request.id}">
-                    <i class="fas fa-times"></i> Reject
-                </button>
-            `
-        : `
-                <button class="disabled-btn" disabled>
-                    ${
-                      request.status === "approved"
-                        ? "✅ Approved"
-                        : "❌ Rejected"
-                    }
-                </button>
-            `
-    }
-</td>
-
-    `;
-
+                    <td>
+                      <img src="${pet.image}" alt="${pet.name}" class="pet-image">
+                    </td>
+                    <td>${pet.name}</td>
+                    <td>${pet.breed}</td>
+                    <td>${request.from_user}</td>
+                    <td>
+                      <span class="status ${request.status.toLowerCase()}">
+                        ${request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+                      </span>
+                    </td>
+                    <td class="actions">
+                      ${
+                        request.status === "pending"
+                          ? `
+                            <button class="approve-btn" data-request-id="${request.id}">
+                              <i class="fas fa-check"></i> Approve
+                            </button>
+                            <button class="reject-btn" data-request-id="${request.id}">
+                              <i class="fas fa-times"></i> Reject
+                            </button>
+                          `
+                          : `
+                            <button class="disabled-btn" disabled>
+                              ${request.status === "approved" ? "✅ Approved" : "❌ Rejected"}
+                            </button>
+                          `
+                      }
+                    </td>
+                    <td class="phone-number" style="display: ${request.status === 'approved' || request.status === 'rejected' ? 'table-cell' : 'none'};">
+                      ${
+                        request.status === "rejected"
+                          ? "Request Rejected"
+                          : request.phone
+                          ? request.phone
+                          : 'Phone not available'
+                      }
+                    </td>
+                  `;
+  
                   tableBody.appendChild(row);
                 });
               })
               .catch((error) => console.error("Error fetching pets:", error));
           });
       });
-
+  
+      // Handle approval and rejection
       document.addEventListener("click", async (e) => {
         if (
           e.target.closest(".approve-btn") ||
@@ -371,15 +374,16 @@
           const row = button.closest("tr");
           const statusCell = row.querySelector(".status");
           const actionsCell = row.querySelector(".actions");
-
+          const phoneCell = row.querySelector(".phone-number");
+  
           const newStatus = button.classList.contains("approve-btn")
             ? "approved"
             : "rejected";
-
+  
           // Show loading spinner
           button.innerHTML = `<div class="loading-spinner"></div>`;
           button.disabled = true;
-
+  
           try {
             const response = await fetch(
               "http://localhost/petcare/adopt/update_request.php",
@@ -395,25 +399,30 @@
                 }),
               }
             );
-
+  
             const result = await response.json();
-
+  
             if (result.success) {
               // Update status cell
               statusCell.textContent =
                 newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
               statusCell.className = `status ${newStatus}`;
-
+  
               // Update actions cell
               actionsCell.innerHTML = `
-                    <button class="disabled-btn" disabled>
-                        ${
-                          newStatus === "approved"
-                            ? "✅ Approved"
-                            : "❌ Rejected"
-                        }
-                    </button>
-                `;
+                <button class="disabled-btn" disabled>
+                  ${newStatus === "approved" ? "✅ Approved" : "❌ Rejected"}
+                </button>
+              `;
+  
+              // Show phone number if approved or rejected
+              if (newStatus === "approved") {
+                phoneCell.style.display = "table-cell"; // Display the phone number
+                phoneCell.textContent = request.phone ? request.phone : 'Phone not available';
+              } else if (newStatus === "rejected") {
+                phoneCell.style.display = "table-cell"; // Show rejection message
+                phoneCell.textContent = "Request Rejected"; // Custom message for rejected requests
+              }
             } else {
               alert(result.error || "Failed to update status");
             }
@@ -425,9 +434,7 @@
             if (button.parentElement === actionsCell) {
               button.innerHTML = `<i class="fas fa-${
                 newStatus === "approved" ? "check" : "times"
-              }"></i> ${
-                newStatus.charAt(0).toUpperCase() + newStatus.slice(1)
-              }`;
+              }"></i> ${newStatus.charAt(0).toUpperCase() + newStatus.slice(1)}`;
               button.disabled = false;
             }
           }
@@ -435,4 +442,5 @@
       });
     </script>
   </body>
-</html>
+  
+  </html>

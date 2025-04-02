@@ -368,12 +368,16 @@
                   headers: {
                     "Content-Type": "application/json",
                   },
-                  body: JSON.stringify(petData), // Send JSON data
+                  body: JSON.stringify(petData),
                 }
               );
 
-              const result = await response.json();
-              console.log(result);
+              // Get the raw response and parse it
+              const rawResponse = await response.text();
+              console.log(rawResponse); // Debugging the raw response
+
+              const result = JSON.parse(rawResponse); // Now it should be a valid JSON object
+
               if (result.success) {
                 alert("Pet listed successfully!");
                 window.location.href = "index.html"; // Redirect to home
